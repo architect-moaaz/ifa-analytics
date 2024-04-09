@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Embedding Vega-Lite</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.6.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
+
+  
+  </head>
+  <body>
+    <div id="vis"> 
+    </div>
+    <div id="vis1"> 
+    </div>
+
+    <script src="js/ts.js"></script>
+    <script src="js/line.js"></script>
+    <script src="js/zline.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/dashboard.css">
+    <script type="text/javascript">
+
+
+
+        var configuration = {
+            compiled: true,
+            config: {
+                "axis": {"labelFont": "monospace", "titleFont": "san-serif"},
+                "legend": {"labelFont": "monospace", "titleFont": "san-serif"},
+                "header": {"labelFont": "monospace", "titleFont": "san-serif"},
+                "mark": {"font": "san-serif"},
+                "title": {"font": "san-serif", "subtitleFont": "san-serif"}
+            },
+            actions :{
+                export: true,
+                source: false,
+                compiled: false,
+                editor: false
+             }
+        };
+
+        //var vizSpec = timeseries();
+        //vegaEmbed('#vis', vizSpec , configuration);
+
+     
+       // vegaEmbed('#vis', timeseries() , configuration);
+
+       var params = ['temp', 'humidity','co2','luminosity','vpd'];
+       var colorSchems = ["oranges" , "tealblues" , "warmgreys" , "purples" ,"inferno"];
+
+       for(var index in params){
+         var _param = params[index];
+
+
+        var tag = document.createElement("div");
+        tag.setAttribute("id" , "vis_"+_param);
+    
+         var element = document.getElementById("vis");
+         element.appendChild(tag);
+
+         //vegaEmbed('#vis_'+_param, timeseries(_param) , configuration);
+         vegaEmbed('#vis_'+_param, zLineHighlighter(_param , colorSchems[index]) , configuration);
+
+       }
+
+       //vegaEmbed('#vis1', zLineHighlighter() , configuration);
+       // vegaEmbed('#visHumidity', timeseries() , configuration);
+
+    </script>
+
+</body>
